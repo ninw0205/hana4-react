@@ -3,7 +3,7 @@ import { ReactNode, useState } from 'react';
 type TitleProps = { text: string; name: string };
 
 const Title = ({ text, name }: TitleProps) => {
-  console.log('titleeeeeeee');
+  // console.log('titleeeeeeee');
   return (
     <h1>
       {text} {name}
@@ -12,7 +12,7 @@ const Title = ({ text, name }: TitleProps) => {
 };
 
 const Body = ({ children }: { children: ReactNode }) => {
-  console.log('boddddddd!!!'); // children(props)가 바뀔때 함수형 컴포넌트가 통째로 다시 render 되므로 이 코드도 계속 다시 실행됨
+  // console.log('boddddddd!!!'); // children(props)가 바뀔때 함수형 컴포넌트가 통째로 다시 render 되므로 이 코드도 계속 다시 실행됨
   return (
     <div className='red' style={{ color: 'blue' }}>
       {children}
@@ -20,25 +20,32 @@ const Body = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default function Hello() {
-  const [myState, setMyState] = useState(0);
+type Props = {
+  name: string;
+  age: number;
+  plusCount: () => void;
+};
+
+export default function Hello({ name, age, plusCount }: Props) {
+  const [myState, setMyState] = useState(() => new Date().getTime());
   let v = 1;
-  console.log('********', v, myState);
+  // console.debug('********', v, myState);
 
   return (
     <>
-      <Title text='Hi~' name='React' />
+      <Title text='Hi~' name={name} />
       <Body>
-        This is Hello Body Component. {v} - {myState}
+        This is Hello Body Component. {v} - {myState} - {age}
       </Body>
       <button
         onClick={() => {
           v++; // 이건 왜 카운트가 계속 안되지?
           setMyState(myState + 1);
+          plusCount();
           // console.log('🚀 ~ v/myState:', v, myState);
         }}
       >
-        Click Here!
+        Hello
       </button>
     </>
   );
