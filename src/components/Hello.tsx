@@ -23,13 +23,22 @@ const Body = ({ children }: { children: ReactNode }) => {
 type Props = {
   name: string;
   age: number;
+  count: number;
   plusCount: () => void;
+  minusCount: () => void;
 };
 
-export default function Hello({ name, age, plusCount }: Props) {
-  const [myState, setMyState] = useState(() => new Date().getTime());
+export default function Hello({
+  name,
+  age,
+  count,
+  plusCount,
+  minusCount,
+}: Props) {
+  // const [myState, setMyState] = useState(() => new Date().getTime());
+  const [myState, setMyState] = useState(0);
   let v = 1;
-  // console.debug('********', v, myState);
+  console.debug('********', v, myState, count);
 
   return (
     <>
@@ -47,6 +56,8 @@ export default function Hello({ name, age, plusCount }: Props) {
       >
         Hello
       </button>
+      <strong>{count}</strong>
+      <button onClick={() => minusCount()}>Minus</button>
     </>
   );
 }
