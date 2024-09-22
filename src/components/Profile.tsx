@@ -10,7 +10,9 @@ export default function Profile({ session, logout }: Props) {
     <div>
       {/* 왜 session.loginUser만 작성하면 아무것도 화면에 출력되지 않는지? */}
       <h3>{session.loginUser?.name} logined</h3>
-      <button onClick={logout}>Sign Out</button>
+      <button onClick={logout} className='btn btn-primary'>
+        Sign Out
+      </button>
     </div>
   );
 }

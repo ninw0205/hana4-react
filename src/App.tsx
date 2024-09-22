@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css';
 import Hello from './components/Hello';
 import My from './components/My';
 
@@ -37,10 +36,10 @@ function App() {
   // console.log('Apppppp');
 
   return (
-    <>
+    <div className='mt-5 flex flex-col items-center'>
       <Hello
-        name='홍길동'
-        age={33}
+        name='Inwoo'
+        age={29}
         count={count}
         plusCount={plusCount}
         minusCount={minusCount}
@@ -56,11 +55,12 @@ function App() {
             if (session.loginUser) session.loginUser.name = 'XXX' + count; //session이 상태값이기 때문에 session이 아닌 session.loginUser.name이 바뀌어도 새로 render 안됨
             console.table(session.loginUser);
           }}
+          className='btn'
         >
           App.count is {count}
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

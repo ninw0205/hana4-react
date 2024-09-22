@@ -26,22 +26,32 @@ export default function Login({ login }: Props) {
   };
 
   return (
-    <form onSubmit={signIn}>
-      ID:
-      <input
-        type='number'
-        placeholder='Id...'
-        id='id'
-        // onChange={(e) => setId(+e.currentTarget.value)}
-      />
-      Name:
-      <input
-        type='text'
-        placeholder='Name...'
-        id='name'
-        // onChange={(e) => setName(+e.currentTarget.value)}
-      />
-      <button>Sign In</button>
+    <form onSubmit={signIn} className='border p-4'>
+      <div className='flex'>
+        <label htmlFor='id' className='w-24'>
+          ID:
+        </label>
+        <input
+          type='number'
+          placeholder='ID...'
+          id='id'
+          className='inp mb-3'
+          // onChange={(e) => setId(+e.currentTarget.value)}
+        />
+      </div>
+      <div className='flex'>
+        <label htmlFor='name' className='w-24'>
+          Name:
+        </label>
+        <input
+          type='text'
+          placeholder='Name...'
+          id='name'
+          className='inp'
+          // onChange={(e) => setName(+e.currentTarget.value)}
+        />
+      </div>
+      <button className='btn btn-success float-end mt-3'>Sign In</button>
     </form>
   );
 }
