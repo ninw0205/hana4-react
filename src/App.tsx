@@ -30,7 +30,11 @@ function App() {
     SetSession({ ...session }); // 새로 session을 만들기 때문에 side effect가 아님!
   };
 
-  console.log('Apppppp');
+  const login = (id: number, name: string) => {
+    SetSession({ ...session, loginUser: { id, name } });
+  };
+
+  // console.log('Apppppp');
 
   return (
     <>
@@ -42,8 +46,8 @@ function App() {
         minusCount={minusCount}
       />
       <hr />
-      {/* <pre>{JSON.stringify(session.loginUser)}</pre> */}
-      <My session={session} logout={logout} />
+      <pre>{JSON.stringify(session.loginUser)}</pre>
+      <My session={session} logout={logout} login={login} />
       <div className='card'>
         <button
           onClick={() => {

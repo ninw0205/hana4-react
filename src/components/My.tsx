@@ -5,15 +5,16 @@ import Profile from './Profile.tsx';
 type Props = {
   session: Session;
   logout: () => void;
+  login: (id: number, name: string) => void;
 };
 
-export default function My({ session, logout }: Props) {
+export default function My({ session, logout, login }: Props) {
   return (
     <>
       {session.loginUser ? (
         <Profile session={session} logout={logout} />
       ) : (
-        <Login />
+        <Login login={login} />
       )}
       <ul>
         {session.cart.map(({ id, name, price }) => (
