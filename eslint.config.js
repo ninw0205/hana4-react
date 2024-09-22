@@ -38,7 +38,7 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      'prettier/prettier': 'error',
+      'prettier/prettier': 'warn',
       'jsx-a11y/alt-text': 'error',
     },
   },

@@ -15,25 +15,32 @@ export default function Login({ login }: Props) {
       id: HTMLInputElement;
       name: HTMLInputElement;
     };
-    console.log('$$$', id, name);
+    // console.log('$$$', id, name);
     if (!id.value || !name.value) {
       alert('Input the id & name!!');
       id.focus();
       return;
     }
+
     login(+id.value, name.value);
   };
 
   return (
     <form onSubmit={signIn}>
-      Id:{' '}
+      ID:
       <input
         type='number'
         placeholder='Id...'
         id='id'
         // onChange={(e) => setId(+e.currentTarget.value)}
       />
-      Name: <input type='text' placeholder='Name...' id='name' />
+      Name:
+      <input
+        type='text'
+        placeholder='Name...'
+        id='name'
+        // onChange={(e) => setName(+e.currentTarget.value)}
+      />
       <button>Sign In</button>
     </form>
   );
