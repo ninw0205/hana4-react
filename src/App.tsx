@@ -42,7 +42,7 @@ function App() {
         minusCount={minusCount}
       />
       <hr />
-      <pre>{JSON.stringify(session.loginUser)}</pre>
+      {/* <pre>{JSON.stringify(session.loginUser)}</pre> */}
       <My session={session} logout={logout} />
       <div className='card'>
         <button
