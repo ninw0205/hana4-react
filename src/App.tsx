@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Hello from './components/Hello';
 import My from './components/My';
+import { flushSync } from 'react-dom';
 
 const SampleSession = {
   loginUser: { id: 1, name: 'Hong' },
@@ -19,7 +20,20 @@ function App() {
   const [count, setCount] = useState(0);
   const [session, SetSession] = useState<Session>(SampleSession);
 
-  const plusCount = () => setCount(count + 1);
+  const plusCount = () => {
+    // setCount((count) => count + 1);
+    // setCount((count) => {
+    //   const newer = count + 1;
+    //   console.log('🚀 ~ newer:', newer);
+    //   return newer;
+    // });
+    flushSync(() => setCount((c) => c + 1));
+    const cnt = document.getElementById('cnt');
+    console.log('🚀 ~ count:', count, cnt?.innerText);
+    // setTimeout(() => {
+    //   console.log(count, document.getElementById('cnt')?.innerText);
+    // }, 17);
+  };
   const minusCount = () => setCount(count - 1);
 
   const logout = () => {
@@ -33,10 +47,16 @@ function App() {
     SetSession({ ...session, loginUser: { id, name } });
   };
 
+  const removeCartItem = (id: number) =>
+    SetSession({
+      ...session,
+      cart: session.cart.filter((item) => id !== item.id),
+    });
+
   // console.log('Apppppp');
 
   return (
-    <div className='mt-5 flex flex-col items-center'>
+    <div className='flex flex-col items-center'>
       <Hello
         name='Inwoo'
         age={29}
@@ -46,7 +66,12 @@ function App() {
       />
       <hr />
       <pre>{JSON.stringify(session.loginUser)}</pre>
-      <My session={session} logout={logout} login={login} />
+      <My
+        session={session}
+        logout={logout}
+        login={login}
+        removeCartItem={removeCartItem}
+      />
       <div className='card'>
         <button
           onClick={() => {

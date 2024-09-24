@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import Button from './atoms/Button';
 import LabelInput from './molecules/LabelInput';
 
@@ -20,6 +20,10 @@ export default function Login({ login }: Props) {
     login(id, name);
   };
 
+  const changeName = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('changeName Executed>>>', name);
+    setName(e.currentTarget.value);
+  };
   // const signIn = (e: FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
   //   const eles = e.currentTarget.elements;
@@ -47,13 +51,7 @@ export default function Login({ login }: Props) {
             setId(+e.currentTarget.value);
           }}
         />
-        <LabelInput
-          label='Name'
-          type='text'
-          onChange={(e) => {
-            setName(e.currentTarget.value);
-          }}
-        />
+        <LabelInput label='Name' type='text' onChange={changeName} />
         {/* <div className='flex'>
         <label htmlFor='id' className='w-24'>
           ID:

@@ -55,9 +55,11 @@ export default function Hello({
         }}
         className='btn'
       >
-        Hello
+        Hello(+)
       </button>
-      <strong className='mx-5'>{count}</strong>
+      <strong id='cnt' className='mx-5'>
+        {count}
+      </strong>
       <button onClick={() => minusCount()} className='btn btn-danger'>
         Minus
       </button>
