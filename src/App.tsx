@@ -18,7 +18,7 @@ export type Session = { loginUser: LoginUser | null; cart: CartItem[] };
 
 function App() {
   const [count, setCount] = useState(0);
-  const [session, SetSession] = useState<Session>(SampleSession);
+  const [session, setSession] = useState<Session>(SampleSession);
 
   const myHandleRef = useRef<MyHandler>(null);
 
@@ -42,15 +42,20 @@ function App() {
     // 주소가 안바뀌어서 rerender되지 않으면 서버에서의 값은 변경되는데 화면에서 출력만 다르게 됨
     // SetSession({ ...session, loginUser: null });
     session.loginUser = null;
-    SetSession({ ...session }); // 새로 session을 만들기 때문에 side effect가 아님!
+    setSession({ ...session }); // 새로 session을 만들기 때문에 side effect가 아님!
   };
 
   const login = (id: number, name: string) => {
-    SetSession({ ...session, loginUser: { id, name } });
+    setSession({ ...session, loginUser: { id, name } });
+  };
+
+  const addCartItem = (name: string, price: number) => {
+    const id = Math.max(...session.cart.map(({ id }) => id), 0) + 1;
+    setSession({ ...session, cart: [...session.cart, { id, name, price }] });
   };
 
   const removeCartItem = (id: number) =>
-    SetSession({
+    setSession({
       ...session,
       cart: session.cart.filter((item) => id !== item.id),
     });
@@ -68,12 +73,13 @@ function App() {
         ref={myHandleRef}
       />
       <hr />
-      <pre>{JSON.stringify(session.loginUser)}</pre>
+      {/* <pre>{JSON.stringify(session.loginUser)}</pre> */}
       <My
         session={session}
         logout={logout}
         login={login}
         removeCartItem={removeCartItem}
+        addCartItem={addCartItem}
       />
       <div className='card'>
         <button

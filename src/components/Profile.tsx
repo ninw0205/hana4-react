@@ -11,9 +11,9 @@ const Profile = forwardRef(
     return (
       <div className='border px-5 py-2'>
         {/* 왜 session.loginUser만 작성하면 아무것도 화면에 출력되지 않는지? */}
-        <h3>{session.loginUser?.name} logined</h3>
+
         <button onClick={logout} ref={ref} className='btn btn-primary'>
-          Sign Out
+          {session.loginUser?.name} Sign Out
         </button>
 
         {/* <Button text='SignOut' onClick={logout}>
