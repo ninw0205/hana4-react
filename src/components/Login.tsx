@@ -97,11 +97,9 @@ export default function Login({ login }: Props) {
         />
       </div> */}
         {/* <button className='btn btn-success float-end mt-3'>Sign In</button> */}
-        <Button
-          text='Sign In'
-          variant='btn-success'
-          classNames='float-end mt-3'
-        />
+        <Button variant='btn-success' classNames='float-end mt-3'>
+          Sign In
+        </Button>
       </form>
     </>
   );

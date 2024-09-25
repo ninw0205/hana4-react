@@ -1,9 +1,11 @@
-import { FaTrashCan } from 'react-icons/fa6';
+import { FaPlus, FaTrashCan } from 'react-icons/fa6';
 import { Session } from '../App.tsx';
 import Login from './Login.tsx';
 import Profile from './Profile.tsx';
 import { FormEvent, useRef, useState } from 'react';
 import Button from './atoms/Button.tsx';
+import { MdCancel } from 'react-icons/md';
+import { FaSave } from 'react-icons/fa';
 
 type Props = {
   session: Session;
@@ -56,10 +58,9 @@ export default function My({
       {session.loginUser ? (
         <div className='flex gap-5'>
           <Profile session={session} logout={logout} ref={logoutButtonRef} />
-          <Button
-            onClick={() => logoutButtonRef.current?.click()}
-            text='MySignOut'
-          />
+          <Button onClick={() => logoutButtonRef.current?.click()}>
+            MySignOut
+          </Button>
         </div>
       ) : (
         <Login login={login} />
@@ -97,11 +98,17 @@ export default function My({
                 placeholder='price..'
                 className='inp'
               />
-              <Button type='reset' onClick={toggleEditing} text='Cancel' />
-              <Button type='submit' text='Save' variant='btn-primary' />
+              <Button type='reset' onClick={toggleEditing}>
+                <MdCancel />
+              </Button>
+              <Button type='submit' variant='btn-primary'>
+                <FaSave />
+              </Button>
             </form>
           ) : (
-            <Button onClick={toggleEditing} text='+Add Item' />
+            <Button onClick={toggleEditing}>
+              <FaPlus /> Add Item
+            </Button>
           )}
         </li>
       </ul>
