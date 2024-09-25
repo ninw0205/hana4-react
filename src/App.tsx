@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import Hello from './components/Hello';
+import { useRef, useState } from 'react';
+import Hello, { MyHandler } from './components/Hello';
 import My from './components/My';
 import { flushSync } from 'react-dom';
 
@@ -19,6 +19,8 @@ export type Session = { loginUser: LoginUser | null; cart: CartItem[] };
 function App() {
   const [count, setCount] = useState(0);
   const [session, SetSession] = useState<Session>(SampleSession);
+
+  const myHandleRef = useRef<MyHandler>(null);
 
   const plusCount = () => {
     // setCount((count) => count + 1);
@@ -63,6 +65,7 @@ function App() {
         count={count}
         plusCount={plusCount}
         minusCount={minusCount}
+        ref={myHandleRef}
       />
       <hr />
       <pre>{JSON.stringify(session.loginUser)}</pre>
@@ -79,6 +82,7 @@ function App() {
             // if (session.loginUser) session.loginUser = { id: 2, name: 'kim' }; //session이 상태값이기 때문에 session이 아닌 session.loginUser가 바뀌어도 새로 render 안됨
             if (session.loginUser) session.loginUser.name = 'XXX' + count; //session이 상태값이기 때문에 session이 아닌 session.loginUser.name이 바뀌어도 새로 render 안됨
             console.table(session.loginUser);
+            myHandleRef.current?.jumpHelloState();
           }}
           className='btn'
         >
