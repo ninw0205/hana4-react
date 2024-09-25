@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent, useRef } from 'react';
 import Button from './atoms/Button';
 import LabelInput from './molecules/LabelInput';
 
@@ -7,23 +7,29 @@ type Props = {
 };
 
 export default function Login({ login }: Props) {
-  const [id, setId] = useState(0);
-  const [name, setName] = useState('');
+  // const [id, setId] = useState(0);
+  // const [name, setName] = useState('');
   //   console.log('🚀 ~ Login ~ id:', id);
+  // const nameRef = useRef(null);
+  const idRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  console.log(nameRef);
 
   const signIn = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const id = idRef.current?.value;
+    const name = nameRef.current?.value;
     if (!id || !name) {
       alert('Input the id & name!!');
       return;
     }
-    login(id, name);
+    login(+id, name);
   };
 
-  const changeName = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('changeName Executed>>>', name);
-    setName(e.currentTarget.value);
-  };
+  // const changeName = (e: ChangeEvent<HTMLInputElement>) => {
+  //   // console.log('changeName Executed>>>', name);
+  //   setName(e.currentTarget.value);
+  // };
   // const signIn = (e: FormEvent<HTMLFormElement>) => {
   //   e.preventDefault();
   //   const eles = e.currentTarget.elements;
@@ -47,11 +53,25 @@ export default function Login({ login }: Props) {
         <LabelInput
           label='ID'
           type='number'
-          onChange={(e) => {
-            setId(+e.currentTarget.value);
-          }}
+          ref={idRef}
+          // onChange={(e) => {
+          //   setId(+e.currentTarget.value);
+          // }}
         />
-        <LabelInput label='Name' type='text' onChange={changeName} />
+        <div className='flex'>
+          <label htmlFor='name' className='w-24'>
+            Name:
+          </label>
+          <input
+            type='text'
+            placeholder='Name...'
+            id='name'
+            ref={nameRef}
+            className='inp'
+            // onChange={changeName}
+          />
+        </div>
+        {/* <LabelInput label='Name' type='text' onChange={changeName} /> */}
         {/* <div className='flex'>
         <label htmlFor='id' className='w-24'>
           ID:

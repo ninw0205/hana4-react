@@ -14,7 +14,7 @@ export default function Button({
 }: Props) {
   return (
     <button
-      className={`btn ${variant} ${classNames}`}
+      className={`btn ${variant} ${classNames} normal-case`}
       /*onClick={props.onClick}*/ {...props}
     >
       {text}
