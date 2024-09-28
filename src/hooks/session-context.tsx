@@ -1,5 +1,6 @@
 import {
   createContext,
+  createRef,
   PropsWithChildren,
   useContext,
   useRef,
@@ -28,6 +29,7 @@ const contextInitValue = {
   },
   removeCartItem: (id: number) => console.log(id),
   addCartItem: (name: string, price: number) => console.log(name, price),
+  loginRef: createRef<LoginHandler>(),
 };
 
 type SessionContextProps = Omit<typeof contextInitValue, 'session'> & {
@@ -74,7 +76,7 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <SessionContext.Provider
-      value={{ session, logout, login, addCartItem, removeCartItem }}
+      value={{ session, logout, login, addCartItem, removeCartItem, loginRef }}
     >
       {children}
     </SessionContext.Provider>

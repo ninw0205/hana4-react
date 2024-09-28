@@ -1,25 +1,14 @@
-import {
-  FormEvent,
-  ForwardedRef,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { FormEvent, useImperativeHandle, useRef } from 'react';
 import Button from './atoms/Button';
 import LabelInput from './molecules/LabelInput';
-
-type Props = {
-  login: (id: number, name: string) => void;
-};
+import { useSession } from '../hooks/session-context';
 
 export type LoginHandler = {
   focus: (prop: string) => void;
 };
 
-export default forwardRef(function Login(
-  { login }: Props,
-  ref: ForwardedRef<LoginHandler>
-) {
+export default function Login() {
+  const { login, loginRef } = useSession();
   // const [id, setId] = useState(0);
   // const [name, setName] = useState('');
   //   console.log('🚀 ~ Login ~ id:', id);
@@ -34,7 +23,7 @@ export default forwardRef(function Login(
     },
   };
 
-  useImperativeHandle(ref, () => handler);
+  useImperativeHandle(loginRef, () => handler);
 
   const signIn = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,27 +32,6 @@ export default forwardRef(function Login(
 
     login(+id, name);
   };
-
-  // const changeName = (e: ChangeEvent<HTMLInputElement>) => {
-  //   // console.log('changeName Executed>>>', name);
-  //   setName(e.currentTarget.value);
-  // };
-  // const signIn = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const eles = e.currentTarget.elements;
-  //   const { id, name } = eles as typeof eles & {
-  //     id: HTMLInputElement;
-  //     name: HTMLInputElement;
-  //   };
-  //   // console.log('$$$', id, name);
-  //   if (!id.value || !name.value) {
-  //     alert('Input the id & name!!');
-  //     id.focus();
-  //     return;
-  //   }
-
-  //   login(+id.value, name.value);
-  // };
 
   return (
     <>
@@ -121,4 +89,4 @@ export default forwardRef(function Login(
       </form>
     </>
   );
-});
+}

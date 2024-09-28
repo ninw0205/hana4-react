@@ -1,18 +1,15 @@
 import { FaPlus, FaTrashCan } from 'react-icons/fa6';
-import Login, { type LoginHandler } from './Login.tsx';
+import Login from './Login.tsx';
 import Profile from './Profile.tsx';
-import { FormEvent, ForwardedRef, forwardRef, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import Button from './atoms/Button.tsx';
 import { MdCancel } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
 import { useCounter } from '../hooks/counter-hook.tsx';
 import { useSession } from '../hooks/session-context.tsx';
 
-export default forwardRef(function My(
-  _: unknown,
-  ref: ForwardedRef<LoginHandler>
-) {
-  const { session, login, removeCartItem, addCartItem } = useSession();
+export default function My() {
+  const { session, removeCartItem, addCartItem } = useSession();
   const { plusCount } = useCounter();
   const [isEditing, setIsEditing] = useState(false);
   const logoutButtonRef = useRef<HTMLButtonElement>(null);
@@ -60,7 +57,7 @@ export default forwardRef(function My(
           </Button>
         </div>
       ) : (
-        <Login login={login} ref={ref} />
+        <Login />
       )}
       <ul className='my-3 w-2/3 border p-3'>
         {session.cart.length ? (
@@ -111,4 +108,4 @@ export default forwardRef(function My(
       </ul>
     </>
   );
-});
+}
