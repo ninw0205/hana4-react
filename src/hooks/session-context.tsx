@@ -29,6 +29,7 @@ const contextInitValue = {
   },
   removeCartItem: (id: number) => console.log(id),
   addCartItem: (name: string, price: number) => console.log(name, price),
+  editCartItem: (item: CartItem) => console.log(item),
   loginRef: createRef<LoginHandler>(),
 };
 
@@ -74,9 +75,26 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
       cart: session.cart.filter((item) => id !== item.id),
     });
 
+  const editCartItem = (item: CartItem) => {
+    setSession({
+      ...session,
+      cart: session.cart.map((oldItem) =>
+        oldItem.id === item.id ? item : oldItem
+      ),
+    });
+  };
+
   return (
     <SessionContext.Provider
-      value={{ session, logout, login, addCartItem, removeCartItem, loginRef }}
+      value={{
+        session,
+        logout,
+        login,
+        addCartItem,
+        removeCartItem,
+        editCartItem,
+        loginRef,
+      }}
     >
       {children}
     </SessionContext.Provider>
