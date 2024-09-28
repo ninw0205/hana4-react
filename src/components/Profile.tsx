@@ -1,18 +1,18 @@
 import { ForwardedRef, forwardRef } from 'react';
-import { Session } from '../App';
-
-type Props = {
-  session: Session;
-  logout: () => void;
-};
+import { useSession } from '../hooks/session-context';
 
 const Profile = forwardRef(
-  ({ session, logout }: Props, ref: ForwardedRef<HTMLButtonElement>) => {
+  (_: unknown, ref: ForwardedRef<HTMLButtonElement>) => {
+    const { session, logout } = useSession();
     return (
       <div className='border px-5 py-2'>
         {/* 왜 session.loginUser만 작성하면 아무것도 화면에 출력되지 않는지? */}
 
-        <button onClick={logout} ref={ref} className='btn btn-primary'>
+        <button
+          onClick={logout}
+          ref={ref}
+          className='btn btn-primary normal-case'
+        >
           {session.loginUser?.name} Sign Out
         </button>
 
