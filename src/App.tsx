@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import Hello, { MyHandler } from './components/Hello';
 import My from './components/My';
 import { flushSync } from 'react-dom';
+import { LoginHandler } from './components/Login';
 
 const SampleSession = {
   loginUser: { id: 1, name: 'Hong' },
@@ -45,7 +46,19 @@ function App() {
     setSession({ ...session }); // 새로 session을 만들기 때문에 side effect가 아님!
   };
 
+  const loginRef = useRef<LoginHandler>(null);
+
   const login = (id: number, name: string) => {
+    if (!id) {
+      alert('ID 입력하세요');
+      return loginRef.current?.focus('id');
+    }
+
+    if (!name) {
+      alert('Name 입력하세요');
+      return loginRef.current?.focus('name');
+    }
+
     setSession({ ...session, loginUser: { id, name } });
   };
 
@@ -80,6 +93,7 @@ function App() {
         login={login}
         removeCartItem={removeCartItem}
         addCartItem={addCartItem}
+        ref={loginRef}
       />
       <div className='card'>
         <button

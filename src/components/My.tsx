@@ -1,8 +1,8 @@
 import { FaPlus, FaTrashCan } from 'react-icons/fa6';
 import { Session } from '../App.tsx';
-import Login from './Login.tsx';
+import Login, { type LoginHandler } from './Login.tsx';
 import Profile from './Profile.tsx';
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, ForwardedRef, forwardRef, useRef, useState } from 'react';
 import Button from './atoms/Button.tsx';
 import { MdCancel } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
@@ -15,13 +15,10 @@ type Props = {
   addCartItem: (name: string, price: number) => void;
 };
 
-export default function My({
-  session,
-  logout,
-  login,
-  removeCartItem,
-  addCartItem,
-}: Props) {
+export default forwardRef(function My(
+  { session, logout, login, removeCartItem, addCartItem }: Props,
+  ref: ForwardedRef<LoginHandler>
+) {
   const [isEditing, setIsEditing] = useState(false);
   const logoutButtonRef = useRef<HTMLButtonElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
@@ -63,7 +60,7 @@ export default function My({
           </Button>
         </div>
       ) : (
-        <Login login={login} />
+        <Login login={login} ref={ref} />
       )}
       <ul className='my-3 w-2/3 border p-3'>
         {session.cart.length ? (
@@ -114,4 +111,4 @@ export default function My({
       </ul>
     </>
   );
-}
+});

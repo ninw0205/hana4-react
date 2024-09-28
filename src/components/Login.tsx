@@ -1,4 +1,10 @@
-import { FormEvent, useRef } from 'react';
+import {
+  FormEvent,
+  ForwardedRef,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import Button from './atoms/Button';
 import LabelInput from './molecules/LabelInput';
 
@@ -6,23 +12,35 @@ type Props = {
   login: (id: number, name: string) => void;
 };
 
-export default function Login({ login }: Props) {
+export type LoginHandler = {
+  focus: (prop: string) => void;
+};
+
+export default forwardRef(function Login(
+  { login }: Props,
+  ref: ForwardedRef<LoginHandler>
+) {
   // const [id, setId] = useState(0);
   // const [name, setName] = useState('');
   //   console.log('🚀 ~ Login ~ id:', id);
   // const nameRef = useRef(null);
   const idRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
-  console.log(nameRef);
+
+  const handler: LoginHandler = {
+    focus(prop: string) {
+      if (prop === 'id') idRef.current?.focus();
+      if (prop === 'name') nameRef.current?.focus();
+    },
+  };
+
+  useImperativeHandle(ref, () => handler);
 
   const signIn = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const id = idRef.current?.value;
-    const name = nameRef.current?.value;
-    if (!id || !name) {
-      alert('Input the id & name!!');
-      return;
-    }
+    const id = idRef.current?.value ?? 0;
+    const name = nameRef.current?.value ?? '';
+
     login(+id, name);
   };
 
@@ -103,4 +121,4 @@ export default function Login({ login }: Props) {
       </form>
     </>
   );
-}
+});
