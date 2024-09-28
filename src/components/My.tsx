@@ -6,6 +6,7 @@ import { FormEvent, ForwardedRef, forwardRef, useRef, useState } from 'react';
 import Button from './atoms/Button.tsx';
 import { MdCancel } from 'react-icons/md';
 import { FaSave } from 'react-icons/fa';
+import { useCounter } from '../hooks/counter-hook.tsx';
 
 type Props = {
   session: Session;
@@ -19,12 +20,18 @@ export default forwardRef(function My(
   { session, logout, login, removeCartItem, addCartItem }: Props,
   ref: ForwardedRef<LoginHandler>
 ) {
+  const { plusCount } = useCounter();
   const [isEditing, setIsEditing] = useState(false);
   const logoutButtonRef = useRef<HTMLButtonElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
 
-  const toggleEditing = () => setIsEditing((pre) => !pre);
+  console.log('myyyyyyyyyyyy');
+
+  const toggleEditing = () => {
+    setIsEditing((pre) => !pre);
+    plusCount();
+  };
 
   const removeItem = (id: number) => {
     if (confirm('Are you sure?')) removeCartItem(id);
