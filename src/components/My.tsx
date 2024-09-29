@@ -1,7 +1,7 @@
 import { FaPlus } from 'react-icons/fa6';
 import Login from './Login.tsx';
 import Profile from './Profile.tsx';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import Button from './atoms/Button.tsx';
 import { useSession } from '../hooks/session-context.tsx';
 import Item from './Item.tsx';
@@ -32,6 +32,15 @@ export default function My() {
 
   //   return () => console.log('unmount2!!');
   // }, []);
+
+  const totalPrice = useMemo(
+    () => session.cart.reduce((acc, item) => acc + item.price, 0),
+    [session.cart]
+  );
+
+  useLayoutEffect(() => {
+    console.log('$$$$$$$$$$$$$$$$$$$$', totalPrice);
+  }, [totalPrice]);
 
   useEffect(() => {
     // const abortController = new AbortController();
@@ -89,6 +98,10 @@ export default function My() {
           )}
         </li>
       </ul>
+      <div className='mb-3 flex gap-5'>
+        <span>*총액: {totalPrice.toLocaleString()}원</span>
+        <span>*할인: {totalPrice.toLocaleString()}원</span>
+      </div>
       <Button onClick={toggleReloadSession}>Reload Session</Button>
     </>
   );

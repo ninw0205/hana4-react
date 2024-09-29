@@ -31,7 +31,7 @@ export const useFetch = <T>(
 
     (async function () {
       try {
-        console.log(url.substring(url.length - 12), '--->', cache);
+        // console.log(url.substring(url.length - 12), '--->', cache);
         if (url in cache) {
           // console.log('cccccccccccccc');
           return setResult(cache[url] as T);
