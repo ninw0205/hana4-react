@@ -31,7 +31,7 @@ export const useFetch = <T>(
 
     (async function () {
       try {
-        // console.log('cache>>>', cache);
+        console.log(url.substring(url.length - 12), '--->', cache);
         if (url in cache) {
           // console.log('cccccccccccccc');
           return setResult(cache[url] as T);
@@ -46,7 +46,10 @@ export const useFetch = <T>(
         setResult(data);
         setError(undefined);
 
-        if (isCache) cache[url] = data;
+        if (isCache) {
+          cache[url] = data;
+        }
+
         // console.log('cache22>>>', cache);
         // console.log('useFetch.data>>>', data);
       } catch (error) {
