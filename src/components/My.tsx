@@ -38,8 +38,10 @@ export default function My() {
     [session.cart]
   );
 
+  const dcPrice = useMemo(() => totalPrice * 0.1, [totalPrice]);
+
   useLayoutEffect(() => {
-    console.log('$$$$$$$$$$$$$$$$$$$$', totalPrice);
+    // console.log('$$$$$$$$$$$$$$$$$$$$', totalPrice);
   }, [totalPrice]);
 
   useEffect(() => {
@@ -100,7 +102,7 @@ export default function My() {
       </ul>
       <div className='mb-3 flex gap-5'>
         <span>*총액: {totalPrice.toLocaleString()}원</span>
-        <span>*할인: {totalPrice.toLocaleString()}원</span>
+        <span>*할인: {dcPrice.toFixed(0).toLocaleString()}원</span>
       </div>
       <Button onClick={toggleReloadSession}>Reload Session</Button>
     </>
