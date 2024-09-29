@@ -1,13 +1,9 @@
 import { ForwardedRef, forwardRef } from 'react';
 import { useSession } from '../hooks/session-context';
-import { useFetch } from '../hooks/fetch-hook';
 
 const Profile = forwardRef(
   (_: unknown, ref: ForwardedRef<HTMLButtonElement>) => {
     const { session, logout } = useSession();
-
-    const data = useFetch('/data/sample.json');
-    console.log('🚀 ~ Profile.data:', data);
 
     return (
       <div className='border px-5 py-2'>

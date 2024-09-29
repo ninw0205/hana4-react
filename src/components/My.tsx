@@ -8,8 +8,9 @@ import Item from './Item.tsx';
 import useToggle from '../hooks/toggle.ts';
 
 export default function My() {
-  const { session } = useSession();
+  const { session, toggleReloadSession } = useSession();
   const logoutButtonRef = useRef<HTMLButtonElement>(null);
+
   // const [isAdding, setIsAdding] = useState(false);
   // const toggleAdding = () => {
   //   setIsAdding((pre) => !pre);
@@ -33,27 +34,24 @@ export default function My() {
   // }, []);
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const { signal } = abortController;
-
-    (async function () {
-      try {
-        const data = await fetch('/data/sample.json', { signal }).then((res) =>
-          res.json()
-        );
-        console.log('My.data>>>', data);
-      } catch (error) {
-        console.error('Error>>>', error);
-      }
-    })();
-
+    // const abortController = new AbortController();
+    // const { signal } = abortController;
+    // (async function () {
+    //   try {
+    //     const data = await fetch('/data/sample.json', { signal }).then((res) =>
+    //       res.json()
+    //     );
+    //     console.log('My.data>>>', data);
+    //   } catch (error) {
+    //     console.error('Error>>>', error);
+    //   }
+    // })();
     // fetch('/data/sample.json', { signal })
     //   .then((res) => res.json())
     //   .then((data) => {
     //     console.log('data>>', data);
     //   });
-
-    return () => abortController.abort('Clean-up in My!');
+    // return () => abortController.abort('Clean-up in My!');
   }, []);
 
   return (
@@ -91,6 +89,7 @@ export default function My() {
           )}
         </li>
       </ul>
+      <Button onClick={toggleReloadSession}>Reload Session</Button>
     </>
   );
 }
