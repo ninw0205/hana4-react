@@ -18,6 +18,7 @@ export const CounterProvider = ({ children }: PropsWithChildren) => {
 
   const plusCount = () => {
     setCount((count) => count + 1);
+    console.log('plusCOunt>>>', count);
 
     // setCount((count) => {
     //   const newer = count + 1;
@@ -33,6 +34,7 @@ export const CounterProvider = ({ children }: PropsWithChildren) => {
   };
   const minusCount = () => {
     setCount((count) => count - 1);
+    console.log('minusCOunt>>>', count);
   };
 
   return (

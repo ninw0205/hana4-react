@@ -35,21 +35,22 @@ export default function Login() {
     login(+id, name);
   };
 
-  useEffect(() => {
-    const intl = setInterval(() => console.log('xxx'), 500);
-    return () => clearInterval(intl);
-  }, []);
+  // useEffect(() => {
+  //   const intl = setInterval(() => console.log('xxx'), 500);
+  //   return () => clearInterval(intl);
+  // }, []);
 
   useEffect(() => {
     console.log('useeffffffffff1');
     plusCount();
-  }, [plusCount]);
-
-  useEffect(() => {
-    console.log('useeffffffffff2');
-
     return minusCount;
-  }, [minusCount]);
+  }, [plusCount, minusCount]);
+
+  // useEffect(() => {
+  //   console.log('useeffffffffff2');
+
+  //   return minusCount;
+  // }, [minusCount]);
 
   return (
     <>
