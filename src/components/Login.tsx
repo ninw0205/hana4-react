@@ -1,4 +1,10 @@
-import { FormEvent, useEffect, useImperativeHandle, useRef } from 'react';
+import {
+  FormEvent,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 import Button from './atoms/Button';
 import LabelInput from './molecules/LabelInput';
 import { useSession } from '../hooks/session-context';
@@ -40,11 +46,21 @@ export default function Login() {
   //   return () => clearInterval(intl);
   // }, []);
 
-  useEffect(() => {
-    console.log('useeffffffffff1');
-    plusCount();
-    return minusCount;
-  }, [plusCount, minusCount]);
+  useLayoutEffect(() => {
+    console.log('useLayoutEffect!!');
+  }, []);
+
+  useEffect(
+    () => {
+      console.log('useeffffffffff1');
+      plusCount();
+      return minusCount;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      /*plusCount, minusCount*/
+    ]
+  );
 
   // useEffect(() => {
   //   console.log('useeffffffffff2');
