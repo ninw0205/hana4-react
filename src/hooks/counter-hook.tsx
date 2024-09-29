@@ -16,20 +16,23 @@ export const CounterProvider = ({ children }: PropsWithChildren) => {
   // console.log('**************');
 
   const plusCount = () => {
-    // setCount((count) => count + 1);
-    setCount((count) => {
-      const newer = count + 1;
-      console.log('🚀 ~ newer:', newer);
-      return newer;
-    });
+    setCount((count) => count + 1);
+
+    // setCount((count) => {
+    //   const newer = count + 1;
+    //   console.log('🚀 ~ newer:', newer);
+    //   return newer;
+    // });
     // flushSync(() => setCount((c) => c + 1));
-    const cnt = document.getElementById('cnt');
-    console.log('🚀 ~ count:', count, cnt?.innerText);
+    // const cnt = document.getElementById('cnt');
+    // console.log('🚀 ~ count:', count, cnt?.innerText);
     // setTimeout(() => {
     //   console.log(count, document.getElementById('cnt')?.innerText);
     // }, 17);
   };
-  const minusCount = () => setCount(count - 1);
+  const minusCount = () => {
+    setCount((count) => count - 1);
+  };
 
   return (
     <CounterContext.Provider value={{ count, plusCount, minusCount }}>

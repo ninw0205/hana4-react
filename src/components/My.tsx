@@ -17,6 +17,21 @@ export default function My() {
     setIsAdding((pre) => !pre);
   };
 
+  // const primitive = 123;
+
+  // useEffect(() => {
+  //   console.log('effect 1', primitive);
+
+  //   return () => console.log('unmount1!!');
+  // }, [primitive]);
+
+  // useEffect(() => {
+  //   console.log('effect 2');
+  //   // alert('login plz...');
+
+  //   return () => console.log('unmount2!!');
+  // }, []);
+
   return (
     <>
       {session.loginUser ? (
