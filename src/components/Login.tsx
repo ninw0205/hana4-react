@@ -9,7 +9,7 @@ import Button from './atoms/Button';
 import LabelInput from './molecules/LabelInput';
 import { useSession } from '../hooks/session-context';
 import { useCounter } from '../hooks/counter-hook';
-import { useTimeout } from '../hooks/timer-hooks';
+import { useInterval, useTimeout } from '../hooks/timer-hooks';
 
 export type LoginHandler = {
   focus: (prop: string) => void;
@@ -47,18 +47,32 @@ export default function Login() {
   //   return () => clearTimeout(intl);
   // }, []);
 
-  useTimeout((x: number, y: number) => console.log('xxx', x, y), 500, 123, 456);
+  // useTimeout((x: number, y: number) => console.log('xxx', x, y), 500, 123, 456);
 
-  useTimeout(
-    (y: number) => {
-      console.log('useTimeout!!', y);
-    },
-    500,
-    555
-  );
+  // useInterval(() => console.log('interval!!'), 1000);
+
+  console.log('*****', new Date().getSeconds());
+  useInterval(plusCount, 1500);
+  // const f = useCallback(() => {
+  //   console.log('once?');
+  // }, []);
+
+  const f = () => {
+    console.log('once?');
+  };
+
+  useTimeout(f, 1000);
+
+  // useTimeout(
+  //   (y: number) => {
+  //     console.log('useTimeout!!', y);
+  //   },
+  //   500,
+  //   555
+  // );
 
   useLayoutEffect(() => {
-    console.log('useLayoutEffect!!');
+    // console.log('useLayoutEffect!!');
   }, []);
 
   useEffect(
