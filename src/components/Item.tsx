@@ -1,6 +1,6 @@
 import { FaTrashCan } from 'react-icons/fa6';
 import { useSession, type CartItem } from '../hooks/session-context';
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, MouseEvent, useRef, useState } from 'react';
 import { useCounter } from '../hooks/counter-hook';
 import Button from './atoms/Button';
 import { MdCancel } from 'react-icons/md';
@@ -16,13 +16,28 @@ export default function Item({ item, toggleAdding }: Props) {
 
   const { removeCartItem, addCartItem, editCartItem } = useSession();
   const { plusCount } = useCounter();
+
   const [isEditing, setIsEditing] = useState(!id);
+  const [hasDirty, setDirty] = useState(false);
+
   const nameRef = useRef<HTMLInputElement>(null);
   const priceRef = useRef<HTMLInputElement>(null);
 
-  const toggleEditing = () => {
-    if (toggleAdding) toggleAdding();
-    else setIsEditing((pre) => !pre);
+  const toggleEditing = (
+    e?: FormEvent<HTMLFormElement> | MouseEvent<HTMLButtonElement>
+  ) => {
+    // if (e && 'preventDefault' in e)
+    e?.preventDefault();
+
+    if (hasDirty && nameRef.current && priceRef.current) {
+      nameRef.current.value = name;
+      priceRef.current.value = String(price);
+    }
+
+    setTimeout(() => {
+      if (toggleAdding) toggleAdding();
+      else setIsEditing((pre) => !pre);
+    }, 500);
 
     plusCount();
   };
@@ -54,6 +69,12 @@ export default function Item({ item, toggleAdding }: Props) {
     toggleEditing();
   };
 
+  const checkDirty = () => {
+    const currName = nameRef.current?.value;
+    const currPrice = Number(priceRef.current?.value);
+    setDirty(name !== currName || price !== currPrice);
+  };
+
   return (
     <>
       {isEditing ? (
@@ -62,6 +83,7 @@ export default function Item({ item, toggleAdding }: Props) {
           <input
             ref={nameRef}
             type='text'
+            onChange={checkDirty}
             defaultValue={name}
             placeholder='name..'
             className='inp'
@@ -69,6 +91,7 @@ export default function Item({ item, toggleAdding }: Props) {
           <input
             ref={priceRef}
             type='number'
+            onChange={checkDirty}
             defaultValue={price}
             placeholder='price..'
             className='inp'
@@ -76,14 +99,16 @@ export default function Item({ item, toggleAdding }: Props) {
           <Button type='reset' onClick={toggleEditing}>
             <MdCancel />
           </Button>
-          <Button type='submit' variant='btn-primary'>
-            <FaSave />
-          </Button>
+          {hasDirty && (
+            <Button type='submit' variant='btn-primary'>
+              <FaSave />
+            </Button>
+          )}
         </form>
       ) : (
         <a
           href='#'
-          onClick={toggleEditing}
+          onClick={() => toggleEditing()}
           className='group flex justify-between hover:bg-gray-100'
         >
           <strong className='group-hover:text-blue-500'>
