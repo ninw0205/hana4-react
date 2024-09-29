@@ -1,18 +1,26 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Hello, { MyHandler } from './components/Hello';
 import My from './components/My';
 import { SessionProvider } from './hooks/session-context';
 // import { useCounter } from './hooks/counter-hook';
 
 function App() {
+  const [friend, setFriend] = useState(10);
   const myHandleRef = useRef<MyHandler>(null);
-
-  // console.log('Apppppp');
 
   return (
     <div className='flex flex-col items-center'>
       <SessionProvider>
-        <Hello age={29} ref={myHandleRef} />
+        <div className='mt-3 w-64'>
+          <input
+            type='number'
+            defaultValue={friend}
+            onChange={(e) => setFriend(+e.currentTarget.value)}
+            placeholder='friend id...'
+            className='inp'
+          />
+        </div>
+        <Hello friend={friend} ref={myHandleRef} />
         <hr />
         <My />
       </SessionProvider>

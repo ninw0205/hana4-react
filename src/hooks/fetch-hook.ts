@@ -1,6 +1,20 @@
 import { useEffect, useState } from 'react';
 
+const ABORT_REASON = 'My useFetch Clean-up';
 const cache: Record<string, unknown> = {};
+
+interface ErrorWithMessage {
+  message: string;
+}
+
+const isErrorWithMessage = (error: unknown): error is ErrorWithMessage =>
+  typeof error === 'object' &&
+  error !== null &&
+  'message' in error &&
+  typeof error.message === 'string';
+
+const toErrorWithMessage = (error: unknown) =>
+  isErrorWithMessage(error) ? error : new Error(JSON.stringify(error));
 
 export const useFetch = <T>(
   url: string,
@@ -8,6 +22,8 @@ export const useFetch = <T>(
   depArr: unknown[] = []
 ) => {
   const [result, setResult] = useState<T>();
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState<ErrorWithMessage>();
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -15,27 +31,37 @@ export const useFetch = <T>(
 
     (async function () {
       try {
-        console.log('cache>>>', cache);
+        // console.log('cache>>>', cache);
         if (url in cache) {
-          console.log('cccccccccccccc');
+          // console.log('cccccccccccccc');
           return setResult(cache[url] as T);
         }
-        const data = (await fetch(url, { signal }).then((res) =>
-          res.json()
-        )) as T;
+
+        setLoading(true);
+        const data = (await fetch(url, { signal }).then((res) => {
+          if (res.ok) return res.json();
+          throw new Error(`${res.status} ${res.statusText}`);
+        })) as T;
+        // console.log('🚀 ~ data ~ data:', data);
+        setResult(data);
+        setError(undefined);
 
         if (isCache) cache[url] = data;
-        console.log('cache22>>>', cache);
+        // console.log('cache22>>>', cache);
         // console.log('useFetch.data>>>', data);
-        setResult(data);
       } catch (error) {
-        console.error('Error>>>', error);
+        if (error || String(error) !== ABORT_REASON) {
+          console.error('Error>>>', error, String(error));
+          setError(toErrorWithMessage(error));
+        }
+      } finally {
+        setLoading(false);
       }
     })();
 
-    return () => abortController.abort('Clean-up');
+    return () => abortController.abort(ABORT_REASON);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, depArr);
-  return result;
+  return { data: result, isLoading, error };
 };

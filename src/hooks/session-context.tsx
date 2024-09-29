@@ -51,13 +51,13 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useState<Session>(SampleSession);
   const [reloadSession, toggleReloadSession] = useToggle();
 
-  const data =
-    useFetch<Session>('/data/sample.json', false, [reloadSession]) ||
-    SampleSession;
+  const { data } = useFetch<Session>('/data/sample.json', false, [
+    reloadSession,
+  ]);
   // console.log('🚀 ~ SessionProvider ~ data:', data);
 
   useLayoutEffect(() => {
-    setSession(data);
+    setSession(data || SampleSession);
   }, [data]);
 
   const loginRef = useRef<LoginHandler>(null);

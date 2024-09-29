@@ -9,7 +9,7 @@ import Button from './atoms/Button';
 import LabelInput from './molecules/LabelInput';
 import { useSession } from '../hooks/session-context';
 import { useCounter } from '../hooks/counter-hook';
-import { useInterval, useTimeout } from '../hooks/timer-hooks';
+import { useTimeout } from '../hooks/timer-hooks';
 
 export type LoginHandler = {
   focus: (prop: string) => void;
@@ -51,8 +51,8 @@ export default function Login() {
 
   // useInterval(() => console.log('interval!!'), 1000);
 
-  console.log('*****', new Date().getSeconds());
-  useInterval(plusCount, 1500);
+  // console.log('*****', new Date().getSeconds());
+  // useInterval(plusCount, 1500);
   // const f = useCallback(() => {
   //   console.log('once?');
   // }, []);
