@@ -36,15 +36,20 @@ export default function Login() {
   };
 
   useEffect(() => {
-    console.log('useeffffffffff1');
-    plusCount();
-  }, [plusCount]);
+    const intl = setInterval(() => console.log('xxx'), 500);
+    return () => clearInterval(intl);
+  }, []);
 
-  useEffect(() => {
-    console.log('useeffffffffff2');
+  // useEffect(() => {
+  //   console.log('useeffffffffff1');
+  //   plusCount();
+  // }, [plusCount]);
 
-    return minusCount;
-  }, [minusCount]);
+  // useEffect(() => {
+  //   console.log('useeffffffffff2');
+
+  //   return minusCount;
+  // }, [minusCount]);
 
   return (
     <>
