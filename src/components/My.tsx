@@ -1,7 +1,7 @@
 import { FaPlus } from 'react-icons/fa6';
 import Login from './Login.tsx';
 import Profile from './Profile.tsx';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Button from './atoms/Button.tsx';
 import { useSession } from '../hooks/session-context.tsx';
 import Item from './Item.tsx';
@@ -31,6 +31,18 @@ export default function My() {
 
   //   return () => console.log('unmount2!!');
   // }, []);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    const { signal } = abortController;
+    fetch('/data/sample.json', { signal })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data>>', data);
+      });
+
+    return () => abortController.abort();
+  }, []);
 
   return (
     <>
