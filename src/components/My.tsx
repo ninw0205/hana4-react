@@ -35,13 +35,25 @@ export default function My() {
   useEffect(() => {
     const abortController = new AbortController();
     const { signal } = abortController;
-    fetch('/data/sample.json', { signal })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data>>', data);
-      });
 
-    return () => abortController.abort();
+    (async function () {
+      try {
+        const data = await fetch('/data/sample.json', { signal }).then((res) =>
+          res.json()
+        );
+        console.log('My.data>>>', data);
+      } catch (error) {
+        console.error('Error>>>', error);
+      }
+    })();
+
+    // fetch('/data/sample.json', { signal })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log('data>>', data);
+    //   });
+
+    return () => abortController.abort('Clean-up in My!');
   }, []);
 
   return (
