@@ -81,6 +81,31 @@ export const useInterval = useTimer.bind({
   clearFn: clearInterval,
 });
 
+export const useDebounce = <T extends (...args: unknown[]) => ReturnType<T>>(
+  cb: T,
+  delay: number,
+  depArr: unknown[] = []
+) => {
+  const cbRef = useRef(cb);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | number>();
+
+  const { reset, clear } = useTimeout(cb, delay);
+
+  useEffect(() => {
+    reset();
+    return clear;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...depArr, delay]);
+
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(cbRef.current, delay);
+
+    return () => clearTimeout(timerRef.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...depArr, delay]);
+};
+
 // hook 규칙 위반!!
 // export const useInterval = <
 //   T extends (...args: Parameters<T>) => ReturnType<T>,
@@ -133,3 +158,11 @@ export const useInterval = useTimer.bind({
 
 // export const useTimeout = useTimer(setTimeout, clearTimeout);
 // export const useInterval = useTimer(setInterval, clearInterval);
+
+// const useDebounce = (cb, delay) => {
+//   let timer;
+//   return (...args) => {
+//     if (timer)
+//   }
+//   useEffect(() => {});
+// };

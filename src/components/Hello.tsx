@@ -84,7 +84,9 @@ function Hello({ friend }: Props, ref: ForwardedRef<MyHandler>) {
               : error.message}
           </strong>
         ) : (
-          <strong>My friend is {friendInfo?.username}.</strong>
+          <strong>
+            My friend is {friendInfo?.id}. {friendInfo?.username}.
+          </strong>
         )}
         <p>
           {v} - {friend}
