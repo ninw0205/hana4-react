@@ -89,11 +89,10 @@ export const useDebounce = <T extends (...args: unknown[]) => ReturnType<T>>(
   const cbRef = useRef(cb);
   const timerRef = useRef<ReturnType<typeof setTimeout> | number>();
 
-  const { reset, clear } = useTimeout(cb, delay);
+  const { reset } = useTimeout(cb, delay);
 
   useEffect(() => {
     reset();
-    return clear;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...depArr, delay]);
 
