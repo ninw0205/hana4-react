@@ -33,6 +33,21 @@ export default function My() {
     [searchRef.current?.value]
   );
 
+  const [ulHeight, setUlHeight] = useState(0);
+
+  // const ulCbRef = useCallback(
+  //   (node: HTMLUListElement) => {
+  //     console.log('node>>>', node, session.cart.length);
+  //     setUlHeight(node?.clientHeight);
+  //   },
+  //   [session.cart.length]
+  // );
+
+  const ulCbRef = (node: HTMLUListElement) => {
+    console.log('node>>>', node, session.cart.length);
+    setUlHeight(node?.clientHeight);
+  };
+
   // const primitive = 123;
 
   // useEffect(() => {
@@ -105,7 +120,7 @@ export default function My() {
             ref={searchRef}
           />
         </div>
-        <ul className='my-3 px-3'>
+        <ul ref={ulCbRef} className='my-3 px-3'>
           {session.cart.length ? (
             session.cart
               .filter(({ name }) => name.includes(searchstr))
@@ -134,6 +149,7 @@ export default function My() {
       <div className='mb-3 flex gap-5'>
         <span>*총액: {totalPrice.toLocaleString()}원</span>
         <span>*할인: {dcPrice.toFixed(0).toLocaleString()}원</span>
+        <span>{ulHeight}</span>
       </div>
       <Button onClick={toggleReloadSession}>Reload Session</Button>
     </>
