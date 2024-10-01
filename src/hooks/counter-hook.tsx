@@ -1,5 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, PropsWithChildren, useContext, useState } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useReducer,
+  useState,
+} from 'react';
 // import { flushSync } from 'react-dom';
 
 type CounterContextProps = typeof contextInitValue;
@@ -12,13 +18,26 @@ const contextInitValue = {
 
 const CounterContext = createContext<CounterContextProps>(contextInitValue);
 
+type Action = {
+  type: 'plus' | 'minus';
+  payload: number;
+};
+
+const reducer = (count: number, { type, payload }: Action) => {
+  if (type === 'plus') return count + payload;
+  if (type === 'minus') return count - payload;
+  return count;
+};
+
 export const CounterProvider = ({ children }: PropsWithChildren) => {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+  const [count, dispatch] = useReducer(reducer, 0);
   // console.log('**************');
 
-  const plusCount = () => {
-    setCount((count) => count + 1);
-    console.log('plusCOunt>>>', count);
+  const plusCount = (step: number = 1) => {
+    // setCount((count) => count + 1);
+    // console.log('plusCOunt>>>', count);
+    dispatch({ type: 'plus', payload: step });
 
     // setCount((count) => {
     //   const newer = count + 1;
@@ -32,9 +51,10 @@ export const CounterProvider = ({ children }: PropsWithChildren) => {
     //   console.log(count, document.getElementById('cnt')?.innerText);
     // }, 17);
   };
-  const minusCount = () => {
-    setCount((count) => count - 1);
-    console.log('minusCOunt>>>', count);
+  const minusCount = (step: number = 1) => {
+    // setCount((count) => count - 1);
+    // console.log('minusCOunt>>>', count);
+    dispatch({ type: 'minus', payload: step });
   };
 
   return (

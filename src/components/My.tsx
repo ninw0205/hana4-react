@@ -1,7 +1,14 @@
 import { FaPlus } from 'react-icons/fa6';
 import Login from './Login.tsx';
 import Profile from './Profile.tsx';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import Button from './atoms/Button.tsx';
 import { useSession } from '../hooks/session-context.tsx';
 import Item from './Item.tsx';
@@ -18,7 +25,7 @@ export default function My() {
   //   setIsAdding((pre) => !pre);
   // };
 
-  const [isAdding, toggleAdding] = useToggle();
+  const [isAdding, toggleAdding] = useReducer((pre) => !pre, false);
 
   const [, toggleSearch] = useToggle();
   const searchRef = useRef<HTMLInputElement>(null);
